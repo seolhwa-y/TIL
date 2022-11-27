@@ -51,7 +51,34 @@ JSP(Java Server Pages)란 태그와 혼용하여 작성할 수 있는 스크립�
 맵(Map)는 Key와 Value가 같이 이루어지는 데이터의 집합이며, 순서가 없고, 중복이 없다. 또한 메모리의 빈공간을 찾아서 저장하기 때문에 저장속도가 느리지만, Key값으로 검색하기 때문에 속도가 빠르다.
 
 
+### MyBatis와 JPA/Hibernate
 
+SQL Mapper : 직접 SQL문 작성해 DB로 접근  
+기존 JDBC를 사용할 때 Connection, Statement, ResultSet을 다뤘어야 했는데 그것을 자바 객체를 실제 쿼리랑 연결하여 빠르게 개발하고 편하게 테스트를 할 수 있다. JDBC로 처리하는 부분의 코드와 파라미터 설정, 결과 매핑을 지원한다.  
+SQL문을 XML에 작성해서 자유롭고 가독성이 좋으며, SQL문을 재사용할 수 있다. XML이랑 Annotation을 사용해서 DB를 사용할 수 있다.  
+학습이 매우 쉽고, 코드와 SQL을 분리할 수 있다.
+
+ORM (Object Relational Mapping) : SQL을 작성하지 않고 객체를 사용하여 데이터를 조작 가능  
+JPA(Java Persistence API)란 Java ORM 기술에 대한 API 표준 명세이다.  
+JPA를 사용하며 Hibernate를 사용하는데 JPA의 구현체이다. 이외 EclipseLink, DataNucleus 등 다양한 구현체가 존재한다.  
+CRUD 쿼리를 자동으로 생성하여 Entity에 속성만 추가하면 쿼리를 건들 필요가 없어진다. 하지만 학습이 어렵고 복잡한 쿼리 작성이 힘들다.
+
+### EL과 jstl
+
+EL(Expression Language)는 JSP의 출력 문법을 대체하는 언어이다.   
+```${el}``` 형식으로 표기한다.
+
+jstl(Jsp Standard Tag Library)는 태그를 통해 JSP 코드를 관리하는 라이브러리이다. JSP의 가독성이 좋아진다.  
+jstl은 라이브러리라서 사용하려면 다운로드를 해야 하므로 아래의 코드를 JSP에 추가하면 jstl 문법을 사용할 수 있다.  
+jstl 태그 종류에는 core, format, function, xml, sql가 있다. 태그의 속성은 너무 많아서 따로 확인해 봐야 한다.  
+
+``` 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+```
+
+JSP 파일을 사용할 때 스클립틀릿 <% %>을 사용하지 말고, EL이랑 jstl을 사용하는 것이 더 효율적이다.
 
 
 ### 동기와 비동기에 대해 설명해 보아라.
