@@ -1,0 +1,9 @@
+-- ONLINE_SALE
+-- 동일한 회원이 재구매한 데이터가 있는
+-- 회원ID 오름차순, 상품ID 내림차순
+SELECT  USER_ID,
+        PRODUCT_ID
+  FROM  ONLINE_SALE
+ GROUP BY USER_ID, PRODUCT_ID
+HAVING COUNT(1) > 1
+ ORDER BY USER_ID, PRODUCT_ID DESC
