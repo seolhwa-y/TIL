@@ -1,0 +1,15 @@
+-- CAR_RENTAL_COMPANY_RENTAL_HISTORY
+-- 대여 시작일이 2022-09에 속하며 대여기간이 30일 이상이면 장기 아니면 단기로 표기 
+-- 칼럼명 : RENT_TYPE
+-- 대여기록ID 내림차순
+SELECT  HISTORY_ID,
+        CAR_ID,
+        TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
+        TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+        CASE WHEN TO_NUMBER(END_DATE - START_DATE + 1) >= 30
+             THEN '장기 대여'
+             ELSE '단기 대여'
+        END AS RENT_TYPE
+  FROM  CAR_RENTAL_COMPANY_RENTAL_HISTORY
+ WHERE  TO_CHAR(START_DATE, 'YYYY-MM') = '2022-09'
+ ORDER BY HISTORY_ID DESC
