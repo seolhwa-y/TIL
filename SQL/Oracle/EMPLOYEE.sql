@@ -1,16 +1,16 @@
-/* Å×ÀÌºí »ý¼º 
- * 1. Á÷¿øÁ¤º¸
- * 2. ºÎ¼­Á¤º¸
- * 2-1. ºÎ¼­ÀÌµ¿Á¤º¸
- * 3. ¿¬ºÀÁ¤º¸
- * 3-1. ¿¬ºÀÀÌ·ÂÁ¤º¸
- * 4. Áö±Þ³»¿ªÁ¤º¸
- * 5. ±ÙÅÂÁ¤º¸
+/* í…Œì´ë¸” ìƒì„± 
+ * 1. ì§ì›ì •ë³´ OK PL/SQL
+ * 2. ë¶€ì„œì •ë³´ OK PL/SQL
+ * 2-1. ë¶€ì„œì´ë™ì •ë³´
+ * 3. ì—°ë´‰ì •ë³´ OK PL/SQL
+ * 3-1. ì—°ë´‰ì´ë ¥ì •ë³´
+ * 4. ì§€ê¸‰ë‚´ì—­ì •ë³´ PL/SQL
+ * 5. ê·¼íƒœì •ë³´
  */
  
-/* 1. Á÷¿øÁ¤º¸ */
+/* 1. ì§ì›ì •ë³´ */
 CREATE TABLE EMPLOYEE(
-    EM_CODE     NUMBER(5)       NOT NULL, -- »ç¿øÄÚµå
+    EM_CODE     NUMBER(5)       NOT NULL, -- ì‚¬ì›ì½”ë“œ
     EM_NAME     VARCHAR2(20)            ,
     DE_CODE     NUMBER(5)               ,
     SA_RANK     VARCHAR2(2)             ,
@@ -23,15 +23,15 @@ CREATE TABLE EMPLOYEE(
 );
 
 
-/* 2. ºÎ¼­Á¤º¸ */
+/* 2. ë¶€ì„œì •ë³´ */
 CREATE TABLE DEOARTMENT(
-    DE_CODE     NUMBER(5)      NOT NULL, -- ºÎ¼­ÄÚµå
-    DE_NAME     VARCHAR2(20)           ,  -- ºÎ¼­ÀÌ¸§
+    DE_CODE     NUMBER(5)      NOT NULL, -- ë¶€ì„œì½”ë“œ
+    DE_NAME     VARCHAR2(20)           ,  -- ë¶€ì„œì´ë¦„
     CONSTRAINT DEOARTMENT_PK PRIMARY KEY (DE_CODE)
 );
 
 
-/* 2-1. ºÎ¼­ÀÌµ¿Á¤º¸ */ 
+/* 2-1. ë¶€ì„œì´ë™ì •ë³´ */ 
 CREATE TABLE MOVEDEOARTMENT(
     EM_CODE     NUMBER(5)       NOT NULL,
     BF_MD_CODE  NUMBER(5)       NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE MOVEDEOARTMENT(
 ALTER TABLE MOVEDEOARTMENT ADD CONSTRAINT MOVEDEOARTMENT_PK PRIMARY KEY (EM_CODE, BF_MD_CODE, AF_MD_CODE);
 
 
-/* 3. ¿¬ºÀÅ×ÀÌºí */
+/* 3. ì—°ë´‰í…Œì´ë¸” */
 CREATE TABLE SALARY(
     SA_CODE     NUMBER(5)       NOT NULL, 
     SA_YEAR     VARCHAR2(4)     NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE SALARY(
 ALTER TABLE SALARY ADD CONSTRAINT SALARY_PK PRIMARY KEY (SA_CODE, SA_YEAR, DE_CODE, SA_RANK);
 
 
-/* 3-1. ¿¬ºÀÀÌ·ÂÁ¤º¸ */ 
+/* 3-1. ì—°ë´‰ì´ë ¥ì •ë³´ */ 
 CREATE TABLE SALARYHISTORY(
     EM_CODE     NUMBER(5)       NOT NULL,
     SA_CODE     NUMBER(5)       NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE SALARYHISTORY(
 
 ALTER TABLE SALARYHISTORY ADD CONSTRAINT SALARYHISTORY_PK PRIMARY KEY (EM_CODE, SA_CODE);
 
-/* 4. Áö±Þ³»¿ªÁ¤º¸(±Þ¿© ÅðÁ÷±Ý) */ 
+/* 4. ì§€ê¸‰ë‚´ì—­ì •ë³´(ê¸‰ì—¬ í‡´ì§ê¸ˆ) */ 
 CREATE TABLE PAYROLL(
     EM_CODE     NUMBER(5)       NOT NULL,
     PA_CODE     VARCHAR2(2)     NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE PAYROLL(
 ALTER TABLE PAYROLL ADD CONSTRAINT PAYROLL_PK PRIMARY KEY (EM_CODE, PA_CODE, PA_ATDATE, PA_PAYDATE, PA_NORMAL );
 
 
-/* 5. ±ÙÅÂÁ¤º¸ */ 
+/* 5. ê·¼íƒœì •ë³´ */ 
 CREATE TABLE ATTENDANCE(
     EM_CODE     NUMBER(5)       NOT NULL,
     AT_CODE     NUMBER(5)       NOT NULL,
@@ -112,7 +112,7 @@ SELECT * FROM ATTENDANCE;
 
 
 
----- PL/SQL LOOP, FOR¹® ----
+---- PL/SQL LOOP, FORë¬¸ ----
 DECLARE
  EM_NAME VARCHAR2(100) := 'test6_';
  SA_RANK VARCHAR2(2) := 'D';
@@ -265,15 +265,14 @@ SELECT * FROM PAYROLL;
 
 SELECT  
         B.DE_CODE, 
-
-        SUM(±Þ¿©), 
-        SUM(Â÷°¨¾×),  
-        SUM(½ÇÁö±Þ¾×)
+        SUM(ê¸‰ì—¬), 
+        SUM(ì°¨ê°ì•¡),  
+        SUM(ì‹¤ì§€ê¸‰ì•¡)
 FROM (
         SELECT EM_CODE,
-                (PA_NORMAL+ PA_MEAL + PA_DRIVE + PA_BONUS) AS ±Þ¿©, 
-                (PA_HEALTH + PA_LONGCARE + PA_NOTIONAL + PA_EMP) AS Â÷°¨¾×,  
-                (PA_NORMAL+ PA_MEAL + PA_DRIVE + PA_BONUS)-(PA_HEALTH + PA_LONGCARE + PA_NOTIONAL + PA_EMP) AS ½ÇÁö±Þ¾×
+                (PA_NORMAL+ PA_MEAL + PA_DRIVE + PA_BONUS) AS ê¸‰ì—¬, 
+                (PA_HEALTH + PA_LONGCARE + PA_NOTIONAL + PA_EMP) AS ì°¨ê°ì•¡,  
+                (PA_NORMAL+ PA_MEAL + PA_DRIVE + PA_BONUS)-(PA_HEALTH + PA_LONGCARE + PA_NOTIONAL + PA_EMP) AS ì‹¤ì§€ê¸‰ì•¡
         FROM PAYROLL
 ) A, EMPLOYEE B
 WHERE A.EM_CODE = B.EM_CODE
@@ -290,4 +289,22 @@ SET DE_CODE =  5
 WHERE DE_CODE = 0;
 
 /
+
+UPDATE PAYROLL
+ SET PA_PAYDATE = '2023-08-10'
+WHERE PA_ATDATE = '2023-07';
+
+SELECT REPLACE(PA_PAYDATE, '-') FROM PAYROLL;
+
+UPDATE PAYROLL SET PA_PAYDATE = REPLACE(PA_PAYDATE, '-'), PA_ATDATE =  REPLACE(PA_ATDATE, '-');
+
+/
+
+
+/* ì—°ë´‰í…Œì´ë¸” ìˆ˜ì • ë° ì—°ë´‰ì´ë ¥ ë³€ê²½ ë° ì›”ê¸‰ ì§€ê¸‰ì¼ ìˆ˜ì • */
+
+
+
+
+/* ê³„ì •ê³¼ëª© í…Œì´ë¸” + ì§€ì¶œê²°ì˜ì„œ */
 
